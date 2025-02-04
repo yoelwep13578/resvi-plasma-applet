@@ -1,0 +1,52 @@
+# DISPLAY/APPEARANCE
+display-as = label, load, bar, max
+
+# LABEL
+label-type = icon                      # [icon][text]
+
+label-dynamic-icon = no                # [no][yes]
+label-icon-20 = 40, , "icon"           # [limitCelcius], [limitFahrenheit], [icon]
+label-icon-40 = 50, , "icon"           # [limitCelcius], [limitFahrenheit], [icon]
+label-icon-60 = 60, , "icon"           # [limitCelcius], [limitFahrenheit], [icon]
+label-icon-80 = 80, , "icon"           # [limitCelcius], [limitFahrenheit], [icon]
+label-icon-100 = 90, , "icon"          # [limitCelcius], [limitFahrenheit], [icon]
+#--
+label-icon-33 = 10, "icon"             # [limitCPUPercent], [icon]
+label-icon-66 = 40, "icon"             # [limitCPUPercent], [icon]
+label-icon-99 = 70, "icon"             # [limitCPUPercent], [icon]
+
+
+label-icon = "UTF-logo"
+label-text = " CPU"
+
+label-left-sign = "[ "
+label-right-sign = " ]"
+
+# LOAD/CURRENT
+loadinfo-fixed-width = 4              # [no][4][5][6][...]
+loadinfo-text-align = left            # [left][right]
+loadinfo-type = percentage            # [percentage][temperature][size]
+loadinfo-decimal = dynamic            # [dynamic][none][1][2]
+loadinfo-temp-unit = C                # [C][F]
+loadinfo-data-unit = GB-hideB         # [GB][GiB][GB-hideB][GiB-hideB][GiB-hideiB]
+
+loadinfo-left-sign = " ["
+loadinfo-right-sign = "] "
+
+# BAR
+bar-length = medium                   # [shortest][short][medium][long][longest]
+bar-fill-character = "/"
+bar-empty-character = "_"
+
+# MAX/CAPACITY
+maxcap-fixed-width = 4                # [no][4][5][6][...]
+maxcap-text-align = left              # [left][right]
+maxcap-type = follow-system           # [follow-system][text]
+maxcap-text = "100%"
+maxcap-decimal = dynamic              # [dynamic][none][1][2]
+
+maxcap-left-sign = " ["
+maxcap-right-sign = "]"
+
+# SCRIPT PATH/COMMANDS TO LOAD
+...
