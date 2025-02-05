@@ -8,6 +8,40 @@ SCRIPTS_DIR="$SCRIPT_DIR/../scripts"
 # Baca file konfigurasi
 source "$CONFIG_FILE"
 
+# Jika ada parameter, gunakan sebagai custom value untuk cpu_usage
+if [[ -n $1 ]]; then
+    cpu_usage=$1
+else
+    # Ambil data CPU dari script
+    cpu_usage=$("$SCRIPTS_DIR/cpu.sh")
+fi
+
+# Fungsi untuk memilih ikon berdasarkan persentase CPU
+get_dynamic_icon() {
+    local cpu_usage=$1
+
+    if (( $(echo "$cpu_usage < ${label_icon_level1%,*}" | bc -l) )); then
+        echo "${label_icon_level1#*,}"
+    elif (( $(echo "$cpu_usage < ${label_icon_level2%,*}" | bc -l) )); then
+        echo "${label_icon_level2#*,}"
+    elif (( $(echo "$cpu_usage < ${label_icon_level3%,*}" | bc -l) )); then
+        echo "${label_icon_level3#*,}"
+    elif (( $(echo "$cpu_usage < ${label_icon_level4%,*}" | bc -l) )); then
+        echo "${label_icon_level4#*,}"
+    else
+        echo "${label_icon_level5#*,}"
+    fi
+}
+
+# Pilih ikon
+if [[ $label_dynamic_icon == "yes" ]]; then
+    label_icon=$(get_dynamic_icon "$cpu_usage")
+fi
+
+# Command untuk testing (di-comment)
+# Contoh: ./cpu-loader.sh 75.5
+# Contoh: ./cpu-loader.sh 100
+
 # Fungsi untuk memformat angka berdasarkan konfigurasi decimal
 format_number() {
     local number=$1
@@ -15,6 +49,11 @@ format_number() {
     local fixed_width=$3
     local text_align=$4
     local unit=$5
+
+    # Jika persentase mendekati 100, anggap sebagai 100
+    if (( $(echo "$number >= 99.9" | bc -l) )); then
+        number=100
+    fi
 
     # Format angka berdasarkan decimal_type
     case $decimal_type in
@@ -83,17 +122,24 @@ draw_bar() {
     # Konversi persentase ke bilangan bulat
     local percent_int=$(echo "$percent" | awk '{print int($1)}')
 
-    local fill_length=$((percent_int * length / 100))
-    local empty_length=$((length - fill_length))
+    # Jika persentase 0, tidak ada fill
+    if (( percent_int == 0 )); then
+        fill_length=0
+        empty_length=$length
+    else
+        local fill_length=$((percent_int * length / 100))
+        local empty_length=$((length - fill_length))
+    fi
 
     printf "%s" "$left_sign"
-    printf "%0.s$fill" $(seq 1 $fill_length)
-    printf "%0.s$empty" $(seq 1 $empty_length)
+    if (( fill_length > 0 )); then
+        printf "%0.s$fill" $(seq 1 $fill_length)
+    fi
+    if (( empty_length > 0 )); then
+        printf "%0.s$empty" $(seq 1 $empty_length)
+    fi
     printf "%s" "$right_sign"
 }
-
-# Ambil data CPU
-cpu_usage=$("$SCRIPTS_DIR/cpu.sh")
 
 # Format angka berdasarkan konfigurasi
 if [[ $loadinfo_type == "percentage" ]]; then
