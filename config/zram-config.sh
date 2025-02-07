@@ -5,7 +5,7 @@ display_as="label,load,bar,max"
 
 # LABEL
 label_type="icon"
-label_icon=""  # Ikon default untuk ZRAM
+label_icon=""  # Ikon default untuk ZRAM
 label_text="ZRAM"
 label_left_sign="["
 label_right_sign="]"
@@ -16,10 +16,12 @@ loadinfo_fixed_width="4"
 loadinfo_text_align="right"
 loadinfo_type="size"  # Tampilkan nilai dalam ukuran (bisa "percentage" atau "size")
 loadinfo_data_size="auto"  # Satuan data (auto, B, K, M, G, T)
-loadinfo_data_unit="GiB-hide-iB"  # Konversi data (GB, GiB, GB-hide-B, GiB-hide-B, GiB-hide-iB)
+loadinfo_data_unit="GiB"  # Konversi data (GB, GiB, GB-hide-B, GiB-hide-B, GiB-hide-iB)
 loadinfo_decimal="dynamic"
 loadinfo_left_sign="["
 loadinfo_right_sign="]"
+
+loadinfo_zram="data"  # Pilih antara "data", "compressed", atau "total"
 
 # BAR
 bar_length="medium"
