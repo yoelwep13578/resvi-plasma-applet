@@ -17,93 +17,53 @@ zram_usage_percent=$(echo "$zram_data" | cut -d',' -f3)
 # Fungsi untuk mengkonversi KB ke satuan yang diinginkan
 convert_to_unit() {
     local value_kb=$1
-    local data_size=$2
-    local data_unit=$3
+    local data_unit=$2
 
-    # Tentukan besaran satuan (B, K, M, G, T)
-    if [[ $data_size == "auto" ]]; then
-        if [[ $data_unit == *"iB" ]]; then
-            # Basis biner (KiB, MiB, GiB, TiB)
-            if (( $(echo "$value_kb < 1024" | bc -l) )); then
-                data_size="K"
-            elif (( $(echo "$value_kb < 1048576" | bc -l) )); then
-                data_size="M"
-            elif (( $(echo "$value_kb < 1073741824" | bc -l) )); then
-                data_size="G"
-            else
-                data_size="T"
-            fi
+    # Tentukan satuan dari data_unit
+    case $data_unit in
+        "GB") unit="B" ;;
+        "GiB") unit="iB" ;;
+        "GB-hide-B") unit="" ;;
+        "GiB-hide-B") unit="i" ;;
+        "GiB-hide-iB") unit="" ;;
+        *) unit="B" ;;
+    esac
+
+    # Konversi ke satuan yang dipilih
+    if [[ $data_unit == *"iB" ]]; then
+        # Basis biner (KiB, MiB, GiB, TiB)
+        if (( $(echo "$value_kb < 1024" | bc -l) )); then
+            value=$(echo "scale=2; $value_kb" | bc)
+            size_unit="K"
+        elif (( $(echo "$value_kb < 1048576" | bc -l) )); then
+            value=$(echo "scale=2; $value_kb / 1024" | bc)
+            size_unit="M"
+        elif (( $(echo "$value_kb < 1073741824" | bc -l) )); then
+            value=$(echo "scale=2; $value_kb / 1024 / 1024" | bc)
+            size_unit="G"
         else
-            # Basis desimal (KB, MB, GB, TB)
-            if (( $(echo "$value_kb < 1000" | bc -l) )); then
-                data_size="K"
-            elif (( $(echo "$value_kb < 1000000" | bc -l) )); then
-                data_size="M"
-            elif (( $(echo "$value_kb < 1000000000" | bc -l) )); then
-                data_size="G"
-            else
-                data_size="T"
-            fi
+            value=$(echo "scale=2; $value_kb / 1024 / 1024 / 1024" | bc)
+            size_unit="T"
+        fi
+    else
+        # Basis desimal (KB, MB, GB, TB)
+        if (( $(echo "$value_kb < 1000" | bc -l) )); then
+            value=$(echo "scale=2; $value_kb" | bc)
+            size_unit="K"
+        elif (( $(echo "$value_kb < 1000000" | bc -l) )); then
+            value=$(echo "scale=2; $value_kb / 1000" | bc)
+            size_unit="M"
+        elif (( $(echo "$value_kb < 1000000000" | bc -l) )); then
+            value=$(echo "scale=2; $value_kb / 1000 / 1000" | bc)
+            size_unit="G"
+        else
+            value=$(echo "scale=2; $value_kb / 1000 / 1000 / 1000" | bc)
+            size_unit="T"
         fi
     fi
 
-    # Konversi ke satuan yang dipilih
-    case $data_size in
-        "B")
-            if [[ $data_unit == *"iB" ]]; then
-                value=$(echo "scale=2; $value_kb * 1024" | bc)  # Basis biner
-            else
-                value=$(echo "scale=2; $value_kb * 1000" | bc)  # Basis desimal
-            fi
-            ;;
-        "K")
-            if [[ $data_unit == *"iB" ]]; then
-                value=$(echo "scale=2; $value_kb" | bc)  # Basis biner (KiB)
-            else
-                value=$(echo "scale=2; $value_kb" | bc)  # Basis desimal (KB)
-            fi
-            ;;
-        "M")
-            if [[ $data_unit == *"iB" ]]; then
-                value=$(echo "scale=2; $value_kb / 1024" | bc)  # Basis biner (MiB)
-            else
-                value=$(echo "scale=2; $value_kb / 1000" | bc)  # Basis desimal (MB)
-            fi
-            ;;
-        "G")
-            if [[ $data_unit == *"iB" ]]; then
-                value=$(echo "scale=2; $value_kb / 1024 / 1024" | bc)  # Basis biner (GiB)
-            else
-                value=$(echo "scale=2; $value_kb / 1000 / 1000" | bc)  # Basis desimal (GB)
-            fi
-            ;;
-        "T")
-            if [[ $data_unit == *"iB" ]]; then
-                value=$(echo "scale=2; $value_kb / 1024 / 1024 / 1024" | bc)  # Basis biner (TiB)
-            else
-                value=$(echo "scale=2; $value_kb / 1000 / 1000 / 1000" | bc)  # Basis desimal (TB)
-            fi
-            ;;
-        *) value="$value_kb" ;;
-    esac
-
-    # Tentukan unit berdasarkan data_unit
-    case $data_unit in
-        "GB") unit="GB" ;;
-        "GiB") unit="GiB" ;;
-        "GB-hide-B") unit="G" ;;
-        "GiB-hide-B") unit="Gi" ;;
-        "GiB-hide-iB") unit="G" ;;
-        "MB") unit="MB" ;;
-        "MiB") unit="MiB" ;;
-        "KB") unit="KB" ;;
-        "KiB") unit="KiB" ;;
-        "TB") unit="TB" ;;
-        "TiB") unit="TiB" ;;
-        *) unit="GB" ;;
-    esac
-
-    echo "$value,$unit"
+    # Gabungkan nilai dengan satuan
+    echo "$value,$size_unit$unit"
 }
 
 # Format angka berdasarkan konfigurasi
@@ -152,7 +112,7 @@ if [[ $loadinfo_type == "percentage" ]]; then
     loadinfo_value="$zram_usage_percent"
     loadinfo_unit="%"
 else
-    converted_data=$(convert_to_unit "$zram_usage_kb" "$loadinfo_data_size" "$loadinfo_data_unit")
+    converted_data=$(convert_to_unit "$zram_usage_kb" "$loadinfo_data_unit")
     loadinfo_value=$(echo "$converted_data" | cut -d',' -f1)
     loadinfo_unit=$(echo "$converted_data" | cut -d',' -f2)
 fi
@@ -162,7 +122,7 @@ formatted_loadinfo=$(format_number "$loadinfo_value" "$loadinfo_decimal" "$loadi
 
 # Tentukan nilai maxcap
 if [[ $maxcap_type == "follow-system" ]]; then
-    converted_maxcap=$(convert_to_unit "$zram_total_kb" "$loadinfo_data_size" "$loadinfo_data_unit")
+    converted_maxcap=$(convert_to_unit "$zram_total_kb" "$loadinfo_data_unit")
     maxcap_value=$(echo "$converted_maxcap" | cut -d',' -f1)
     maxcap_unit=$(echo "$converted_maxcap" | cut -d',' -f2)
 else
