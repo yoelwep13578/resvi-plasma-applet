@@ -19,7 +19,7 @@ label_right_sign="]"              # Fillable with character and space
 #############################
 #   DYNAMIC ICON ON LABEL   #
 #############################
-label_dynamic_icon="no"           # [yes] [no]
+label_dynamic_icon="no"           # [no] [yes]
 
 label_icon_level1="0, "           # [(LimitThreshold),(Icon)]
 label_icon_level2="40,󰾆"          # [(LimitThreshold),(Icon)]

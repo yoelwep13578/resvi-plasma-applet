@@ -4,12 +4,13 @@
 #   DISPLAY/APPEARANCE   #
 ##########################
 display_as="label,load,bar,max"   # [label],[load],[bar],[max]
+                                  # Fillable with single section, or multi sections (separated by comma)
 
 #############
 #   LABEL   #
 #############
 label_type="icon"                 # [icon] [text]
-label_icon=""                    # Ikon default untuk suhu
+label_icon=""
 label_text="Temp"
 label_left_sign="["
 label_right_sign="]"
@@ -17,13 +18,13 @@ label_right_sign="]"
 #############################
 #   DYNAMIC ICON ON LABEL   #
 #############################
-label_dynamic_icon="yes"           # [yes] [no]
+label_dynamic_icon="yes"          # [no] [yes]
 
-label_icon_level1="50,122,"         # [(LimitCelsius),(LimitFahrenheit),(Icon)]
-label_icon_level2="70,158,"         # [(LimitCelsius),(LimitFahrenheit),(Icon)]
-label_icon_level3="80,176,"         # [(LimitCelsius),(LimitFahrenheit),(Icon)]
-label_icon_level4="90,194,"         # [(LimitCelsius),(LimitFahrenheit),(Icon)]
-label_icon_level5="100,212,"         # [(LimitCelsius),(LimitFahrenheit),(Icon)]
+label_icon_level1="50,122,"      # [(LimitCelsius),(LimitFahrenheit),(Icon)]
+label_icon_level2="70,158,"      # [(LimitCelsius),(LimitFahrenheit),(Icon)]
+label_icon_level3="80,176,"      # [(LimitCelsius),(LimitFahrenheit),(Icon)]
+label_icon_level4="90,194,"      # [(LimitCelsius),(LimitFahrenheit),(Icon)]
+label_icon_level5="100,212,"     # [(LimitCelsius),(LimitFahrenheit),(Icon)]
 
 ####################
 #   LOAD/CURRENT   #
@@ -37,8 +38,10 @@ loadinfo_decimal="dynamic"        # [dynamic] [none] [1] [2]
 loadinfo_left_sign="["
 loadinfo_right_sign="]"
 
-# TARGET
-temp_target="Package id 0"        # Target suhu (misalnya "Package id 0", "Core 0", dll)
+##############
+#   TARGET   #
+##############
+temp_target="Package id 0"        # Temperature Target. Accept [Package id X] [Core X]
 
 ###########
 #   BAR   #
@@ -54,9 +57,8 @@ bar_right_sign=" "
 ####################
 maxcap_fixed_width="4"            # [no] [(Numbers >= 4)]
 maxcap_text_align="right"         # [left] [right]
-maxcap_type="follow-limit"        # [follow-limit] [text]
+maxcap_type="follow-limit"        # Only [follow-limit]
 maxcap_limit="100,212"            # [LimitCelsius, LimitFahrenheit]
-maxcap_text="100%"
 maxcap_decimal="dynamic"          # [dynamic] [none] [1] [2]
 
 maxcap_left_sign="["
