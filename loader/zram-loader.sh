@@ -94,6 +94,12 @@ convert_to_unit() {
         "GB-hide-B") unit="G" ;;
         "GiB-hide-B") unit="Gi" ;;
         "GiB-hide-iB") unit="G" ;;
+        "MB") unit="MB" ;;
+        "MiB") unit="MiB" ;;
+        "KB") unit="KB" ;;
+        "KiB") unit="KiB" ;;
+        "TB") unit="TB" ;;
+        "TiB") unit="TiB" ;;
         *) unit="GB" ;;
     esac
 
