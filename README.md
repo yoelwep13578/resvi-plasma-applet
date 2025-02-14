@@ -1,1 +1,12 @@
 # resvi-plasma-applet
+![Introduction](/images/1--intro.webp)
+![Preparations](/images/2--preparations.webp)
+![display-as Config](/images/3--display-as-config.webp)
+![label Config](/images/4--label-config.webp)
+![load/current Config #1](/images/5--load-config1.webp)
+![load/current Config #2](/images/6--load-config2.webp)
+![load/current Config #3](/images/7--load-config3.webp)
+![bar Config](/images/8--bar-config.webp)
+![max/capacity Config](/images/9--max-config.webp)
+![Target Selections](/images/10--target-config.webp)
+![Example Appearance](/images/11--example.webp)
