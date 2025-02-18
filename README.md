@@ -1,7 +1,7 @@
 # **ResVi Plasma Widget**  
 **A Resource Monitoring Widget Command Set for KDE Plasma**  
 
-## **Introduction**  
+## 📕 **Introduction**  
 
 ![Introduction](/images/1--intro.webp)
 
@@ -13,14 +13,14 @@
  ┣ 📂 **scripts/** → Stores resource data retrieval scripts (e.g., `cpu.sh`, `ram.sh`)  
  ┗ 📂 **loaders/** → Stores processing & display scripts (e.g., `cpu-loader.sh`, `ram-loader.sh`)  
 
-## **Features**  
+## ⚡ **Features**  
 - **Flexible & Customizable** – Labels, indicators, and display format can be adjusted  
 - **Icon & Label Support** – Use text or Nerd Fonts icons  
 - **Supports Various Units** – Percentage, size (MB, GB, etc.), and temperature (°C/°F)  
 - **Supports Multiple Monitoring Targets** – CPU, RAM, disk, temperature, SWAP, and ZRAM  
 - **Compatible with CommandOutput** – Uses KDE Plasma widget to read system command output  
 
-## **Preparations**  
+## 📋 **Preparations**  
 
 ![Preparations](/images/2--preparations.webp)
 
@@ -41,7 +41,7 @@ Some of the ones on this list should at least be installed on your system:
 > 
 > Nerd Fonts doesn't have to be installed if you don't want to use icons, only use text, or prefer to use emotes/emojis.
 
-## **Installation Steps** (Simple but Complex)  
+## 🔨 **Installation Steps** (Simple but Complex)  
 
 ### 1. Clone this repository and place it in your desired location.
 If you are confused, try running this command to save it in `~/cli-widget/resvi-plasma-applet`:
@@ -86,7 +86,7 @@ bash ~/cli-widget/resvi-plasma-applet/loader/zram-loader.sh
 bash ~/cli-widget/resvi-plasma-applet/loader/cpu-loader.sh
 ```  
 
-## **Basic Configuration**  
+## ⚙️ **Basic Configuration**  
 Users can modify the widget's appearance by editing configuration files inside **config/**.  
 
 ---
@@ -185,11 +185,11 @@ Users can modify the widget's appearance by editing configuration files inside *
 
 ---
 
-## **Example Output & Inspirations**  
+### **Example Output & Inspirations**  
 
 ![Example Appearance](/images/11--example.webp)
 
 ---
 
-### **Conclusion**  
+## 🪶 **Conclusion**  
 **ResVi Plasma Widget** provides KDE Plasma users with full flexibility in configuring system resource monitoring displays. With customizable settings, adaptable icons, and support for various data units, this widget is an excellent solution for those looking to tailor their monitoring interface to their personal preferences.  
