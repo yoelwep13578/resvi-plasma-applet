@@ -20,26 +20,71 @@
 - **Supports Multiple Monitoring Targets** – CPU, RAM, disk, temperature, SWAP, and ZRAM  
 - **Compatible with CommandOutput** – Uses KDE Plasma widget to read system command output  
 
-## **Preparation & Installation**  
+## **Preparations**  
 
 ![Preparations](/images/2--preparations.webp)
 
-### **Requirements**  
-✔ **Git** must be installed  
-✔ **Nerd Fonts** (optional but recommended)  
-✔ **Command Output Widget** must be available in KDE Plasma  
+Some of the ones on this list should at least be installed on your system:
+- `git` (Recommended. If not installed, you can download this repo via Release)
+- `bc` (Optional, only for arithmetic tools)
+- `top` (CPU)
+- `free` (RAM & SWAP Memory)
+- `df` (Disk Storage)
+- `sensors` (Temperature)
+- `zramctl` (ZRAM)
+- Monospace Font (Recommended, for width stability while changes)
+- Nerd Fonts (Optional, only for Icons)
+- CommandOutput Widget must be availabe in KDE Plasma
 
-### **Installation Steps**  
-1. Clone this repository and place it in your desired location.  
-2. Grant execution permissions for all files in **config, scripts, and loaders**:  
-   ```bash
-   chmod +x config/*.conf scripts/*.sh loaders/*.sh
-   ```  
-3. Add the **Command Output** widget in KDE Plasma and configure it.  
-4. Run using the following command:  
-   ```bash
-   bash loaders/cpu-loader.sh
-   ```  
+> [!NOTE]
+> Make sure the CommandOutput Widget is installed because this widget repo has a Command Set form for it.
+> 
+> Nerd Fonts doesn't have to be installed if you don't want to use icons, only use text, or prefer to use emotes/emojis.
+
+## **Installation Steps** (Simple but Complex)  
+
+### 1. Clone this repository and place it in your desired location.
+If you are confused, try running this command to save it in `~/cli-widget/resvi-plasma-applet`:
+```bash
+mkdir ~/cli-widget
+git clone https://github.com/yoelwep13578/resvi-plasma-applet.git ~/cli-widget/resvi-plasma-applet
+cd ~/cli-widget/resvi-plasma-applet
+```
+or you can also download it directly and save it manually in Release
+
+### 2. Grant execution permissions for all files in `config`, `scripts`, and `loader`.  
+This command will allow the execution of `.sh` within the `config`, `scripts`, and `loader` folders
+```bash
+cd ./config && chmod +x -R * && cd ../scripts && chmod +x -R * && cd ../loader && chmod +x -R * && cd ../
+```
+or this
+```bash
+chmod +x config/*.conf scripts/*.sh loader/*.sh
+```
+
+### 3. Add the **Command Output** widget in KDE Plasma and configure it.  
+Install it anywhere and adjust the size according to your wishes. 
+
+> [!TIP]
+> It's no problem to **install it on a panel** if you only want to display 1 or 2 resources. But if you want to display more than that, it is recommended to **just install the widget on the desktop.**
+
+### 4. Load Command Set to Widget  
+Fill in the command section in the CommandOutput Widget with `bash /path/to/loader/file.sh`. For example, if the repo is stored in `~/cli-widget/...`:
+```bash
+bash ~/cli-widget/resvi-plasma-applet/loader/cpu-loader.sh &&
+bash ~/cli-widget/resvi-plasma-applet/loader/temp-loader.sh &&
+bash ~/cli-widget/resvi-plasma-applet/loader/ram-loader.sh &&
+bash ~/cli-widget/resvi-plasma-applet/loader/disk-loader.sh &&
+bash ~/cli-widget/resvi-plasma-applet/loader/swap-loader.sh &&
+bash ~/cli-widget/resvi-plasma-applet/loader/zram-loader.sh
+```
+
+> [!NOTE]
+> If you want to display only a few, just delete the ones that are not needed in this command. If you only want to display 1, just copy one of the lines without the `&&`
+
+```bash
+bash ~/cli-widget/resvi-plasma-applet/loader/cpu-loader.sh
+```  
 
 ## **Basic Configuration**  
 Users can modify the widget's appearance by editing configuration files inside **config/**.  
